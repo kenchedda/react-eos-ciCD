@@ -1,6 +1,6 @@
 deployment:
   replicaCount: 1
-  image: dpthub/webapp
+  image: kenappiah/eos-webap:latest
 resources:
   requests:
     cpu: "250m"

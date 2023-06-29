@@ -9,7 +9,7 @@
     serviceAccount: jenkins-agent-sa
     containers:
     - name: deploy
-      image: dpthub/eddeployagent
+      image: kenappiah/agentbuild
       command:
       - cat
       tty: true
@@ -18,16 +18,16 @@
       node (label) {
 
           stage ('Checkout SCM'){
-            git url: 'https://dptrealtime@bitbucket.org/dptrealtime/edweb-login-deployment.git', branch: 'dev'
+            git url: 'https://github.com/kenchedda/react-eos-ciCD.git', branch: 'dev'
           }
 
           stage ('Helm Chart') {
             container('deploy') {
               dir('charts') {
                 withCredentials([usernamePassword(credentialsId: 'jfrog', usernameVariable: 'username', passwordVariable: 'password')]) {
-                      sh '/usr/local/bin/helm repo add dptweb-helm-local  https://edwikifacts.jfrog.io/artifactory/edweb-helm-local --username $username --password $password'
+                      sh '/usr/local/bin/helm repo add ken-helm-helm-local "https://kenappiah.jfrog.io/artifactory/ken-helm-helm-local/webapp-1.0.tgz --username $username --password $password'
                       sh "/usr/local/bin/helm repo update"
-                      sh "/usr/local/bin/helm install dptweb-dev --namespace dev -f values.yaml ."
+                      sh "/usr/local/bin/helm install eos-webapp-dev --namespace dev -f values.yaml ."
                       sh "/usr/local/bin/helm list -a --namespace dev"
                 }
               }
